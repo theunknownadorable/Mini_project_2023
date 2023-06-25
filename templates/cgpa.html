@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CGPA Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+        }
+        
+        .container {
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .form {
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        
+        .form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .result {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>CGPA Analyzer</h1>
+    
+    <div class="container">
+        <div class="form">
+            <label for="cgpa">CGPA:</label>
+            <input type="number" id="cgpa" step="0.01" placeholder="Enter CGPA">
+            
+            <button onclick="analyzeCGPA()">Analyze</button>
+        </div>
+    </div>
+    
+    <div class="result" id="result"></div>
+    
+    <script>
+        function analyzeCGPA() {
+            var cgpaInput = document.getElementById('cgpa');
+            var resultDiv = document.getElementById('result');
+            
+            var cgpa = parseFloat(cgpaInput.value);
+            
+            if (isNaN(cgpa)) {
+                resultDiv.innerText = "Please enter a valid CGPA.";
+                return;
+            }
+            
+            var companies = getCompaniesByCGPA(cgpa);
+            
+            if (companies.length === 0) {
+                resultDiv.innerText = "No companies found for the given CGPA.";
+            } else {
+                resultDiv.innerHTML = "<h2>Companies that recruit based on CGPA:</h2>";
+                var ul = document.createElement("ul");
+                for (var i = 0; i < companies.length; i++) {
+                    var li = document.createElement("li");
+                    li.innerText = companies[i];
+                    ul.appendChild(li);
+                }
+                resultDiv.appendChild(ul);
+            }
+        }
+        
+        function getCompaniesByCGPA(cgpa) {
+            // Modify this function to include the logic for determining the companies based on CGPA.
+            // This is just a sample implementation.
+            var companies = [];
+            
+            if (cgpa >= 3.5) {
+                companies.push("Company A");
+            }
+            
+            if (cgpa >= 3.0) {
+                companies.push("Company B");
+            }
+            
+            if (cgpa >= 2.5) {
+                companies.push("Company C");
+            }
+            
+            return companies;
+        }
+    </script>
+</body>
+</html>
