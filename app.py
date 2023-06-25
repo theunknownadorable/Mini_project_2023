@@ -50,7 +50,7 @@ def predict2():
 
 @app.route('/predict1', methods=['POST'])
 def predict1():
-    data = request.form
+    data = request.get_json(force=True)
     age = float(data['Age'])
     gender = gender_mapping[data['Gender']]
     board = board_mapping[data['Board']]
@@ -89,4 +89,4 @@ def predict1():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
