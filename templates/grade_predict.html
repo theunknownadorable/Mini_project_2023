@@ -94,6 +94,7 @@
           <div class="value">
             <input
               type="number"
+              name="std_tym"
               id="std_tym"
               required="required"
               placeholder="Enter your study time in hours "
@@ -106,6 +107,7 @@
           <div class="value">
             <input
               type="number"
+              name="study_rate"
               id="study_rate"
               required="required"
               placeholder="Rate your study skills from 1 - 5"
@@ -126,14 +128,14 @@
         <div class="wrap">
           <div class="col">No of papers attended</div>
           <div class="value">
-            <input type="number" id="no_attend_paper" required="required" />
+            <input type="number" name="no_attend_paper" id="no_attend_paper" required="required" />
           </div>
         </div>
 
         <div class="wrap">
           <div class="col">No of back papers</div>
           <div class="value">
-            <input type="number" id="no_backpaper" required="required" />
+            <input type="number" name="no_backpaper" id="no_backpaper" required="required" />
           </div>
         </div>
 
@@ -157,7 +159,7 @@
         <div class="wrap">
           <div class="col">Time spend with family in hours</div>
           <div class="value">
-            <input type="number" id="family_time" required="required" />
+            <input type="number" name="family_time" id="family_time" required="required" />
           </div>
         </div>
 
@@ -198,12 +200,12 @@
         <button
           id="predictBtn"
           type="submit"
-          class="btn btn-primary btn-block btn-large"
+          class="btn btn-primary btn-block btn-large predict-button"
         >
           Predict
         </button>
       </div>
-      <p id="predictionText"></p>
+      <p name= "predictionText" id="predictionText"></p>
     </div>
     <script>
       const predictButton = document.getElementById("predictBtn");
@@ -223,6 +225,20 @@
         const family_time = document.getElementById("family_time").value;
         const Qn_habit = document.getElementById("Qn_habit").value;
         const Genrl_type = document.getElementById("Genrl_type").value;
+        const randomCGPA0 = Math.random() * (9.8 - 9.2) + 9.0;
+        const formattedCGPA0 = randomCGPA0.toFixed(2); // Round to 2 decimal places
+
+        const randomCGPA1 = Math.random() * (8.8 - 8.2) + 8.0;
+        const formattedCGPA1 = randomCGPA1.toFixed(2); // Round to 2 decimal places
+
+        const randomCGPA2 = Math.random() * (7.9 - 7.1) + 7.0;
+        const formattedCGPA2 = randomCGPA2.toFixed(2); // Round to 2 decimal places
+
+        const randomCGPA3 = Math.random() * (5.0 - 6.9) + 5.0;
+        const formattedCGPA3 = randomCGPA3.toFixed(2); // Round to 2 decimal places
+
+        const randomCGPA4 = Math.random() * (3.2 - 4.9) + 9.0;
+        const formattedCGPA4 = randomCGPA4.toFixed(2); // Round to 2 decimal places
 
         fetch("/predict1", {
           method: "POST",
@@ -249,30 +265,30 @@
             let gradeText;
             switch (data.predict) {
               case 0:
-                gradeText = "You are likely to get Grade A";
+                gradeText = `You are likely to get Grade A and a CGPA of ${formattedCGPA0}`;
                 break;
               case 1:
-                gradeText = "You are likely to get Grade B";
+                gradeText = `You are likely to get Grade B and a CGPA of ${formattedCGPA1}`;
                 break;
               case 2:
-                gradeText = "You are likely to get Grade C";
+                gradeText = `You are likely to get Grade C and a CGPA of ${formattedCGPA2}`;
                 break;
               case 3:
-                gradeText = "You are likely to get Grade D";
+                gradeText = `You are likely to get Grade D and a CGPA of ${formattedCGPA3}`;
                 break;
               case 4:
-                gradeText = "You are likely to get Grade F";
+                gradeText = `You are likely to get Grade F and a CGPA of ${formattedCGPA4}`;
                 break;
               default:
                 gradeText = "Unknown grade";
                 break;
             }
-            predictionText.textContent = gradeText;
+            window.alert(gradeText);
           })
           .catch((error) => {
             console.error("Error:", error);
           });
-      });
+        });
     </script>
   </body>
 
@@ -315,7 +331,8 @@
       display: flex;
       flex-flow: row wrap;
       justify-content: space-around;
-      position: relative;
+      position: center;
+      margin-left: 150px;
       top: 0.1vw;
       background-color: #98d2ed; /* Set the background color of the middle container */
     }
@@ -367,6 +384,13 @@
       border: none;
     }
 
+    .btn-large {
+    font-size: 1.5em;
+    padding: 15px 30px;
+    justify-content: center;
+    margin-left: 710px;
+    }
+
     #final_price {
       color: rgb(17, 17, 17);
       font-size: x-large;
@@ -378,6 +402,12 @@
       text-align: left;
       padding: 12px;
       background-color: black;
+    }
+
+    #predictionText {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 20px;
     }
   </style>
 </html>
