@@ -57,7 +57,7 @@
 </head>
 <body>
   <div class="container">
-    <form action="action_page.php">
+    <form action="/submit_feedback" method="POST">
       <label for="fname">First Name</label>
       <input type="text" id="fname" name="firstname" placeholder="Your name..">
 
@@ -70,5 +70,31 @@
       <input type="submit" value="Submit">
     </form>
   </div>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+
+        fetch('/submit_feedback', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                // Show a Windows-style popup modal
+                alert('Thank you for your feedback!\nYour feedback has been submitted successfully.');
+            } else {
+                alert('Feedback submission failed. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+}); 
+  </script>
 </body>
 </html>

@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
+  <div id="error-popup" style="display: none;">
+    <div id="error-message">
+      Duplicate entry detected. Please try using another email or password.
+    </div>
+  </div>
   <div id="info">
     <h2>Login / Sign up form</h2><br>
     Click the "Sign Up" button to view the registration form.<br /><br />
@@ -48,7 +53,7 @@
       <a href="#"><img class="social-login" src="https://image.flaticon.com/icons/png/128/49/49026.png"></a>
       <a href="#"><img class="social-login" src="https://image.flaticon.com/icons/png/128/34/34227.png"></a>
       <p>or use your email for registration:</p>
-      <form action="/landing" method="post">
+      <form action="/register" method="post" id="register-form">
         <input type="email" placeholder="Email" name="Email" autocomplete="off" /><br />
         <input type="password" placeholder="Password" name="Password" autocomplete="off" /><br />
         <input class="submit-btn" type="submit" value="Sign Up" />
@@ -67,6 +72,43 @@
     window.addEventListener('load', function() {
       var loadingAnimation = document.getElementById('loading-animation');
       loadingAnimation.classList.add('loaded');
+    });
+
+      // Handle the error message and display a popup if needed
+  var errorMessage = "{{ error }}";
+  if (errorMessage === "Duplicate entry") {
+    var errorDiv = document.getElementById('error-message');
+    errorDiv.style.display = 'block';
+    errorDiv.innerHTML = 'Duplicate entry detected. Please try using another email or password.';
+    alert('Duplicate entry detected. Please try using another email or password.');
+  }
+
+  var registerForm = document.getElementById('register-form');
+    var errorPopup = document.getElementById('error-popup');
+
+    registerForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      // Your code for submitting the form using fetch or other method
+      fetch("/register", {
+        method: "POST",
+        body: new FormData(registerForm),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === "success") {
+            // Redirect after 1 second
+            setTimeout(function() {
+              window.location.href = "/landing1"; // Replace with your landing page URL
+            }, 1000);
+          } else if (data.status === "duplicate") {
+            // Show error pop-up
+            errorPopup.style.display = 'block';
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+        });
     });
   </script>
   <!-- END Container -->

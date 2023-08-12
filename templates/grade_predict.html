@@ -8,6 +8,8 @@
   </head>
 
   <body>
+    <button id="goBackBtn" class="go-back-button">Go Back</button>
+    <button id="cgpaBtn" class="cgpa-button">CGPA Analysis</button>
     <h1
       style="
         text-align: center;
@@ -210,6 +212,8 @@
     <script>
       const predictButton = document.getElementById("predictBtn");
       const predictionText = document.getElementById("predictionText");
+      const goBackButton = document.getElementById("goBackBtn");
+      const cgpaButton= document.getElementById("cgpaBtn");
 
       predictButton.addEventListener("click", () => {
         const Gender = document.getElementById("Gender").value;
@@ -289,6 +293,16 @@
             console.error("Error:", error);
           });
         });
+
+  goBackButton.addEventListener("click", () => {
+    // Navigate to the landing page
+    window.location.href = "/landing1"; // Replace with your actual landing page URL
+  });
+
+  cgpaButton.addEventListener("click", () => {
+    // Navigate to the landing page
+    window.location.href = "/cgpa"; // Replace with your actual landing page URL
+  });
     </script>
   </body>
 
@@ -408,6 +422,32 @@
     font-size: 30px;
     text-align: center;
     margin-top: 20px;
+    }
+
+    .go-back-button {
+      position: absolute;
+      top: 100px; /* Adjust this value for desired spacing from the top */
+      left: 90px; /* Adjust this value for desired spacing from the left */
+      padding: 10px 15px;
+      font-size: 1em;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .cgpa-button {
+      position: absolute;
+      top: 100px; /* Adjust this value for desired spacing from the top */
+      right: 90px; /* Adjust this value for desired spacing from the left */
+      padding: 10px 15px;
+      font-size: 1em;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
   </style>
 </html>

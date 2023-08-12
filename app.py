@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+import MySQLdb 
 from flask_mysqldb import MySQL
 import time
 import pickle
@@ -31,6 +32,11 @@ Genrl_type_mapping={'a combination of both':2,'Listener (one who like to listen 
 def index():
     return render_template('index.html')
 
+@app.route('/landing1')
+def landing1():
+    time.sleep(1)
+    return render_template('landing.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -54,6 +60,21 @@ def login():
 
     return render_template('index.html')
 
+@app.route('/register', methods=['POST'])
+def register():
+    try:
+        Email = request.form['Email']
+        Password = request.form['Password']
+
+        cur = mysql.connection.cursor()
+        query = "INSERT INTO `login` (Email, Password) VALUES (%s, %s)"
+        cur.execute(query, (Email, Password))
+        mysql.connection.commit()
+        cur.close()
+        return jsonify({"status": "success"})
+    except mysql.connection.IntegrityError as e:
+        mysql.connection.rollback()
+        return jsonify({"status": "duplicate"})
 
 @app.route('/landing', methods=['POST'])
 def landing():
@@ -81,6 +102,25 @@ def cgpa():
 def help():
     time.sleep(1)
     return render_template('help.html')
+
+@app.route('/submit_feedback', methods=['POST'])
+def submit_feedback():
+    if request.method == 'POST':
+        fname = request.form['firstname']
+        lname = request.form['lastname']
+        subject = request.form['subject']
+
+        # Insert feedback data into the database
+        cursor = mysql.connection.cursor()
+        query = "INSERT INTO `feedback` (fname, lname, subject) VALUES (%s, %s, %s)"
+        cursor.execute(query, (fname, lname, subject))
+        mysql.connection.commit()
+        cursor.close()
+
+        # Return a success message to be displayed in a JavaScript popup
+        return jsonify({"status": "success"})
+
+    return render_template('help.html')  # Return to the form if not a POST request
 
 @app.route('/logout')
 def logout():

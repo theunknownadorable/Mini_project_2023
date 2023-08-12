@@ -53,6 +53,8 @@
     </style>
 </head>
 <body>
+    <button id="goBackBtn" class="go-back-button">Go Back</button>
+    <button id="cgpaBtn" class="cgpa-button">Grade Prediction</button>
     <h1>CGPA Analyzer</h1>
     
     <div class="container">
@@ -67,6 +69,8 @@
     <div class="result" id="result"></div>
     
     <script>
+    const goBackButton = document.getElementById("goBackBtn");
+    const cgpaButton= document.getElementById("cgpaBtn");
         function analyzeCGPA() {
             var cgpaInput = document.getElementById('cgpa');
             var resultDiv = document.getElementById('result');
@@ -116,7 +120,46 @@
             }
 
             return companies;
+
         }
+
+    goBackButton.addEventListener("click", () => {
+    // Navigate to the landing page
+    window.location.href = "/landing1"; // Replace with your actual landing page URL
+  });
+
+  cgpaButton.addEventListener("click", () => {
+    // Navigate to the landing page
+    window.location.href = "/predict2"; // Replace with your actual landing page URL
+  });
     </script>
+
 </body>
+<style>
+    .go-back-button {
+position: absolute;
+top: 100px; /* Adjust this value for desired spacing from the top */
+left: 90px; /* Adjust this value for desired spacing from the left */
+padding: 10px 15px;
+font-size: 1em;
+background-color: #333;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.cgpa-button {
+position: absolute;
+top: 100px; /* Adjust this value for desired spacing from the top */
+right: 90px; /* Adjust this value for desired spacing from the left */
+padding: 10px 15px;
+font-size: 1em;
+background-color: #333;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+</style>
 </html>
